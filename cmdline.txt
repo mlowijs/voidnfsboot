@@ -1,0 +1,1 @@
+root=/dev/nfs nfsroot=192.168.0.18:/srv/tftpboot/root/SERIALNO,nfsvers=4,tcp ip=dhcp rw rootwait console=ttyAMA0,115200 console=tty1 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 loglevel=4 elevator=noop
