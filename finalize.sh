@@ -1,11 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
 read -p 'New hostname: ' HOSTNAME
 echo $HOSTNAME > /etc/hostname
 
 echo 'Installing utilities...'
 xbps-install -Syu xbps
-xbps-install -Sy nfs-utils sv-netmount sudo nano
+xbps-install -Sy nfs-utils sv-netmount sudo nano void-repo-nonfree
 
 echo 'Enabling netmount...'
 ln -sf /etc/sv/netmount /var/service

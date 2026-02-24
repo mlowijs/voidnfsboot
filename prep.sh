@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 TARGET=fd9f0f00
 NFSHOST=192.168.0.18
@@ -34,6 +35,11 @@ echo "$NFSHOST:/srv/tftpboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp 0 0" 
 echo 'Enabling SSH access for root...'
 cd $OPWD
 sudo cp 10-root.conf $ROOT/etc/ssh/sshd_config.d
+
+echo 'Setting repo mirror...'
+sudo mkdir -p $ROOT/etc/xbps.d
+sudo cp $ROOT/usr/share/xbps.d/*-repository-*.conf $ROOT/etc/xbps.d/
+sudo sed -i 's|https://repo-default.voidlinux.org|https://repo-de.voidlinux.org|g' $ROOT/etc/xbps.d/*-repository-*.conf
 
 echo 'Copying finalize script...'
 cd $OPWD
