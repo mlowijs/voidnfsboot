@@ -1,1 +1,1 @@
-ip=dhcp root=/dev/nfs nfsroot=192.168.0.18:/srv/tftpboot/root/SERIALNO,nfsvers=4,tcp rw rootwait smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 loglevel=4 elevator=noop
+ip=dhcp root=/dev/nfs nfsroot=NFSHOST:/srv/netboot/root/SERIALNO,nfsvers=4,tcp rw rootwait smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 loglevel=4 elevator=noop

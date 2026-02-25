@@ -17,7 +17,7 @@ sudo cp -R *.dtb fixup* start* overlays/ $BOOT
 
 echo 'Configuring boot...'
 cd $OPWD
-sed -e "s/SERIALNO/$TARGET/g" cmdline.txt | sudo tee $BOOT/cmdline.txt > /dev/null
+sed -e "s/SERIALNO/$TARGET/g" cmdline.txt | sed -e "s/NFSHOST/$NFSHOST/g" | sudo tee $BOOT/cmdline.txt > /dev/null
 sudo cp config.txt $BOOT
 
 echo 'Copying root...'
@@ -29,8 +29,8 @@ sudo cp $ROOT/boot/kernel* $BOOT
 sudo rm -rf $ROOT/boot/*
 
 echo 'Setting up fstab...'
-echo "$NFSHOST:/srv/tftpboot/boot/$TARGET /boot nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
-echo "$NFSHOST:/srv/tftpboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/netboot/boot/$TARGET /boot nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/netboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
 
 echo 'Enabling SSH access for root...'
 cd $OPWD
