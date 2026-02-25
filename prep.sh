@@ -12,7 +12,7 @@ echo 'Creating directories...'
 sudo mkdir $BOOT $ROOT
 
 echo 'Copying boot...'
-cd $OPWD/firmware-master/boot
+cd $OPWD/firmware/boot
 sudo cp -R *.dtb fixup* start* overlays/ $BOOT
 
 echo 'Configuring boot...'
