@@ -27,4 +27,4 @@ echo 'Cleaning up...'
 rm /etc/ssh/sshd_config.d/10-root.conf
 rm /etc/motd
 
-echo 'Done.'
+echo 'Done. Reboot for changes to take effect.'
