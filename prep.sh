@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-TARGET=fd9f0f00
+TARGET=f2de5d85
 NFSHOST=192.168.0.18
 
 OPWD=`pwd`
@@ -29,8 +29,8 @@ sudo cp $ROOT/boot/kernel* $BOOT
 sudo rm -rf $ROOT/boot/*
 
 echo 'Setting up fstab...'
-echo "$NFSHOST:/srv/tftpboot/boot/$TARGET /boot nfs4 _netdev,noatime,proto=tcp 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
-echo "$NFSHOST:/srv/tftpboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/tftpboot/boot/$TARGET /boot nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/tftpboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
 
 echo 'Enabling SSH access for root...'
 cd $OPWD
