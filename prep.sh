@@ -1,36 +1,39 @@
 #!/bin/bash
 set -euo pipefail
 
-TARGET=f2de5d85
 NFSHOST=192.168.0.18
 
+if [ $# -lt 1 ]; then
+    echo 'usage: prep.sh SERIALNO'
+    exit
+fi
+
+SERIAL=$1
 OPWD=`pwd`
-BOOT=/mnt/tftpboot/boot/$TARGET
-ROOT=/mnt/tftpboot/root/$TARGET
+BOOT=/mnt/tftpboot/boot/$SERIAL
+ROOT=/mnt/tftpboot/root/$SERIAL
 
 echo 'Creating directories...'
 sudo mkdir $BOOT $ROOT
-
-echo 'Copying boot...'
-cd $OPWD/firmware/boot
-sudo cp -R *.dtb fixup* start* overlays/ $BOOT
-
-echo 'Configuring boot...'
-cd $OPWD
-sed -e "s/SERIALNO/$TARGET/g" cmdline.txt | sed -e "s/NFSHOST/$NFSHOST/g" | sudo tee $BOOT/cmdline.txt > /dev/null
-sudo cp config.txt $BOOT
 
 echo 'Copying root...'
 cd $OPWD
 sudo tar xpf void-rpi*.tar.xz -C $ROOT
 
-echo 'Copying kernel...'
+echo 'Copying boot...'
 sudo cp $ROOT/boot/kernel* $BOOT
 sudo rm -rf $ROOT/boot/*
+cd $OPWD/firmware/boot
+sudo cp -R *.dtb fixup* start* overlays/ $BOOT
+
+echo 'Configuring boot...'
+cd $OPWD
+sed -e "s/SERIALNO/$SERIAL/g" cmdline.txt | sudo tee $BOOT/cmdline.txt > /dev/null
+sudo cp config.txt $BOOT
 
 echo 'Setting up fstab...'
-echo "$NFSHOST:/srv/netboot/boot/$TARGET /boot nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
-echo "$NFSHOST:/srv/netboot/root/$TARGET / nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/netboot/boot/$SERIAL /boot nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
+echo "$NFSHOST:/srv/netboot/root/$SERIAL / nfs4 _netdev,noatime,proto=tcp,async 0 0" | sudo tee -a $ROOT/etc/fstab > /dev/null
 
 echo 'Enabling SSH access for root...'
 cd $OPWD

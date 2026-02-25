@@ -4,8 +4,9 @@ set -euo pipefail
 read -p 'New hostname: ' HOSTNAME
 echo $HOSTNAME > /etc/hostname
 
-echo 'Installing utilities...'
+echo 'Updating and installing utilities...'
 xbps-install -Syu xbps
+xbps-install -Syu
 xbps-install -Sy nfs-utils sv-netmount sudo nano void-repo-nonfree
 
 echo 'Enabling netmount...'
