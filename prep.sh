@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-NFSHOST=192.168.0.18
+NFSHOST=192.168.11.10
 
 if [ $# -lt 1 ]; then
     echo 'usage: prep.sh SERIALNO'
@@ -9,8 +9,8 @@ if [ $# -lt 1 ]; then
 fi
 
 SERIAL=$1
-BOOT=/mnt/tftpboot/boot/$SERIAL
-ROOT=/mnt/tftpboot/root/$SERIAL
+BOOT=/mnt/strmirr/netboot/boot/$SERIAL
+ROOT=/mnt/strmirr/netboot/root/$SERIAL
 
 echo 'Creating directories...'
 sudo mkdir $BOOT $ROOT
